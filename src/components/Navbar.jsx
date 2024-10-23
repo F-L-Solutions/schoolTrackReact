@@ -1,3 +1,5 @@
+import logo from '../assets/images/logo-bile.png'
+
 const Navbar = () => {
   return (
     <nav className="bg-darkGreen border-b border-emerald-800">
@@ -6,11 +8,11 @@ const Navbar = () => {
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
             {/* <!-- Logo --> */}
             <a className="flex flex-shrink-0 items-center mr-4" href="/">
-              {/* <img
+              <img
                 className="h-10 w-auto"
-                src=
+                src={logo}
                 alt="V Mechu"
-              /> */}
+              />
               <span className="hidden md:block text-vanilla text-2xl font-bold ml-2">
                 V Mechu a kapradí
               </span>
