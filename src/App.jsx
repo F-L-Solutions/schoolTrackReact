@@ -1,13 +1,22 @@
-import Navbar from "./components/Navbar";
-import AttendanceList from "./components/AttendanceList";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import MainLayout from "./layouts/MainLayout";
 
 const App = () => {
-  return (
-    <>
-      <Navbar />
-      <AttendanceList />
-    </>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+      </Route>
+    )
   );
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;
