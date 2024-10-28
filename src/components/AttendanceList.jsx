@@ -30,7 +30,7 @@ const AttendanceList = () => {
         </thead>
         <tbody>
           {attendances.map((attendance) => (
-            <Attendance key={attendance.id} attendance={attendance} />
+            <Attendance key={attendance.sysId} attendance={attendance} />
           ))}
         </tbody>
       </table>

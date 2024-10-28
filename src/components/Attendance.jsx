@@ -7,9 +7,12 @@ const Attendance = ({ attendance }) => {
   const excused = attendance.excused;
   let attendanceStatus = setAttendanceStatus(attendance.attendanceStatus);
 
+  let date = new Date(attendance.date); // Parse the date string
+  date = date.toLocaleDateString('cs-CZ', { day: 'numeric', month: 'numeric' });
+
   return (
     <tr className="bg-vanilla">
-      <td className="border px-4 py-2">{attendance.date}</td>
+      <td className="border px-4 py-2">{date}</td>
       <td className="border px-4 py-2">{attendanceStatus}</td>
       <td className="border px-4 py-2">2</td>
       <td className="border px-4 py-2">
