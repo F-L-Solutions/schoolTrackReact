@@ -8,9 +8,7 @@ const AttendanceList = ({ kidId }) => {
   useEffect(() => {
     const fetchAttendances = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:8080/attendances/kid/${kidId}`
-        );
+        const res = await fetch(`/api/attendances/kid/${kidId}`);
         const data = await res.json();
         setAttendances(data);
       } catch (error) {

@@ -15,7 +15,7 @@ const SelectKid = ({ onKidSelect }) => {
   useEffect(() => {
     const fetchKids = async () => {
       try {
-        const res = await fetch("http://localhost:8080/kids/parent/2");
+        const res = await fetch("/api/kids/parent/2");
         const data = await res.json();
         setKids(data);
         // Automatically select the first kid
