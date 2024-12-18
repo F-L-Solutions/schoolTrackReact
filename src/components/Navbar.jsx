@@ -33,19 +33,19 @@ const Navbar = () => {
                     <div className="w-64 p-6 shadow-xl">
                       <div className="mb-3 space-y-3">
                         <NavLink
-                          to="/user/dochazka"
+                          to="/dochazka"
                           className="block hover:underline"
                         >
                           Docházka
                         </NavLink>
                         <NavLink
-                          to="/user/nahrady"
+                          to="/nahrady"
                           className="block hover:underline"
                         >
                           Náhrady
                         </NavLink>
                         <NavLink
-                          to="/user/hlidane-lekce"
+                          to="/hlidane-lekce"
                           className="block hover:underline"
                         >
                           Hlídané lekce

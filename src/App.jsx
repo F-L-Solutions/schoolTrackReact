@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/muj-ucet" element={<MyAccountPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
-        <Route path="/user" element={<SelectKidLayout />}>
+        <Route path="/" element={<SelectKidLayout />}>
           <Route path="nahrady" element={<SubstitutesPage />} />
           <Route path="dochazka" element={<AttendancePage />} />
           <Route path="hlidane-lekce" element={<ReservationPage />} />
