@@ -12,6 +12,9 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      '/vmechu': {
+        target: 'http://localhost:3000',
+      }
     },
   },
 });
