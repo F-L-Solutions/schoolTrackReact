@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import Attendance from "../components/Attendance.jsx";
+import PropTypes from "prop-types";
 
-const AttendanceList = () => {
+const AttendanceList = ({ kidId }) => {
   const [attendances, setAttendances] = useState([]);
 
   useEffect(() => {
     const fetchAttendances = async () => {
       try {
-        const res = await fetch("http://localhost:8080/attendances/kid/253");
+        const res = await fetch(
+          `http://localhost:8080/attendances/kid/${kidId}`
+        );
         const data = await res.json();
         setAttendances(data);
       } catch (error) {
@@ -15,7 +18,7 @@ const AttendanceList = () => {
       }
     };
     fetchAttendances();
-  }, []);
+  }, [kidId]); // Refetch when the kidId prop changes
 
   return (
     <div className="overflow-x-auto">
@@ -29,13 +32,25 @@ const AttendanceList = () => {
           </tr>
         </thead>
         <tbody>
-          {attendances.map((attendance) => (
-            <Attendance key={attendance.sysId} attendance={attendance} />
-          ))}
+          {attendances.length > 0 ? (
+            attendances.map((attendance) => (
+              <Attendance key={attendance.sysId} attendance={attendance} />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" style={{ textAlign: "center" }}>
+                Žádná docházka k zobrazení
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
   );
+};
+
+AttendanceList.propTypes = {
+  kidId: PropTypes.string.isRequired,
 };
 
 export default AttendanceList;
