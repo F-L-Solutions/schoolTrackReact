@@ -1,5 +1,17 @@
+import { useOutletContext } from 'react-router-dom';
+
+import AttendanceList from "../components/AttendanceList";
+import PropTypes from "prop-types";
+
+
 const AttendancePage = () => {
-  return <div>Attendance page</div>;
+    const {kidId} = useOutletContext();
+  return <div>
+    <AttendanceList kidId={kidId}/>
+  </div>;
 };
 
+AttendancePage.propTypes = {
+    kidId: PropTypes.string.isRequired,
+  };
 export default AttendancePage;

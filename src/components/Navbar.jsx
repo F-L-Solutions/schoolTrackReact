@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+
 import logo from "../assets/images/logo-bile.png";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -11,12 +13,12 @@ const Navbar = () => {
         <div className="flex h-20 items-center justify-between">
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
             {/* <!-- Logo --> */}
-            <a className="flex flex-shrink-0 items-center mr-4" href="/">
+            <Link className="flex flex-shrink-0 items-center mr-4" to="/">
               <img className="h-10 w-auto" src={logo} alt="V Mechu" />
               <span className="hidden md:block text-vanilla text-2xl font-bold ml-2">
                 V Mechu a kapradí
               </span>
-            </a>
+            </Link>
             <div className="md:ml-auto">
               <div
                 onMouseEnter={() => setOpen(true)}
@@ -30,21 +32,30 @@ const Navbar = () => {
                     <div className="absolute -top-6 left-0 right-0 h-6 bg-transparent" />
                     <div className="w-64 p-6 shadow-xl">
                       <div className="mb-3 space-y-3">
-                        <a href="/dochazka" className="block hover:underline">
+                        <NavLink
+                          to="/user/dochazka"
+                          className="block hover:underline"
+                        >
                           Docházka
-                        </a>
-                        <a href="/nahrady" className="block hover:underline">
+                        </NavLink>
+                        <NavLink
+                          to="/user/nahrady"
+                          className="block hover:underline"
+                        >
                           Náhrady
-                        </a>
-                        <a
-                          href="/hlidane-lekce"
+                        </NavLink>
+                        <NavLink
+                          to="/user/hlidane-lekce"
                           className="block hover:underline"
                         >
                           Hlídané lekce
-                        </a>
-                        <a href="/muj-ucet" className="block hover:underline">
+                        </NavLink>
+                        <NavLink
+                          to="/muj-ucet"
+                          className="block hover:underline"
+                        >
                           Můj účet
-                        </a>
+                        </NavLink>
                       </div>
                     </div>
                   </div>
