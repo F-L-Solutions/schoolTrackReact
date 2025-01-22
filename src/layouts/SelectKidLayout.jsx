@@ -11,22 +11,21 @@ const SelectKidLayout = () => {
     setSelectedKid(selectedKidId);
   };
 
-  return (
-    <div>
-      <Navbar />
-      <SelectKid onKidSelect={handleKidSelect} />
-      {selectedKidId && <Outlet kidId="253" />}
-    </div>
-  );
-
   // return (
-  //   <>
+  //   <div>
   //     <Navbar />
   //     <SelectKid onKidSelect={handleKidSelect} />
-  //     <Outlet context={{ kidId: selectedKidId }} />{" "}
-  //     {/* Pass kidId via context */}{" "}
-  //   </>
+  //     {selectedKidId && <Outlet kidId="253" />}
+  //   </div>
   // );
+
+  return (
+    <>
+      <Navbar />
+      <SelectKid onKidSelect={handleKidSelect} />
+      <Outlet context={{ kidId: selectedKidId }} />
+    </>
+  );
 };
 
 export default SelectKidLayout;

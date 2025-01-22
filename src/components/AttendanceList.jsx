@@ -1,12 +1,19 @@
 import { useEffect, useState, useMemo } from "react";
 import Attendance from "../components/Attendance.jsx";
 import PropTypes from "prop-types";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const AttendanceList = ({ kidId }) => {
-  const [attendances, setAttendances] = useState([]);
+  const months = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
   // Memoize the currentDate object - otherwise it would re-render unneccessarily
   const currentDate = useMemo(() => new Date(), []);
-  const months = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
+
+
+  const [attendances, setAttendances] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const [selectedMonth, setSelectedMonth] = useState(months[currentDate.getMonth()]);
+  const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
+
 
   useEffect(() => {
     const fetchAttendances = async () => {
@@ -17,21 +24,40 @@ const AttendanceList = ({ kidId }) => {
         setAttendances(filteredData);
       } catch (error) {
         console.log("Error fetching data " + error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchAttendances();
-  }, [currentDate, kidId]); // Refetch when the kidId prop changes
+  }, [kidId, currentDate]); // Refetch when the kidId prop changes
 
   const filterByMonth = (data, year, month) => {
     return data.filter((item) => {
       const itemDate = new Date(item.date);
-      return itemDate.getFullYear() === year && itemDate.getMonth() === month - 1;
+      return itemDate.getFullYear() === year && itemDate.getMonth() === month;
     });
   };
 
+  const showNextMonth = () => {
+    setSelectedMonth((currentlySelectedMonth) => {
+      return (currentlySelectedMonth + 1) % 12; // Loop back to 0 after 11 (December)
+    });
+  };
+
+  const showPreviousMonth = () => {
+    setSelectedMonth((currentlySelectedMonth) => {
+      return (currentlySelectedMonth - 1 + 12) % 12; // Loop back to 11 (December) after 0 (January)
+    });
+  };
+
+  if (loading) return <div>Loading...</div>;
   return (
     <div className="overflow-x-auto">
-      <h1>{months[currentDate.getMonth()]}</h1>
+      <span>
+        <FaArrowLeft onClick= {showPreviousMonth}/>
+      <h1>{months[selectedMonth]}</h1>
+      <FaArrowRight onClick={showNextMonth}/>
+      </span>
       <table className="table-auto">
         <thead>
           <tr className="bg-yellowGreen px-4 py-2">
@@ -48,7 +74,7 @@ const AttendanceList = ({ kidId }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="3" style={{ textAlign: "center" }}>
+              <td colSpan="4" style={{ textAlign: "center" }}>
                 Žádná docházka k zobrazení
               </td>
             </tr>
@@ -61,7 +87,6 @@ const AttendanceList = ({ kidId }) => {
 
 AttendanceList.propTypes = {
   kidId: PropTypes.string.isRequired,
-  currentDate: PropTypes.string.isRequired
 };
 
 export default AttendanceList;

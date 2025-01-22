@@ -3,8 +3,8 @@ import { useOutletContext } from "react-router-dom";
 import AttendanceList from "../components/AttendanceList";
 import PropTypes from "prop-types";
 
-const AttendancePage = ({ kidId }) => {
-  // const {kidId} = useOutletContext();
+const AttendancePage = () => {
+  const {kidId} = useOutletContext();
   return (
     <div className="flex justify-center align-middle">
       <AttendanceList kidId={kidId} />
