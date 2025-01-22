@@ -8,19 +8,16 @@ const AttendanceList = ({ kidId }) => {
   // Memoize the currentDate object - otherwise it would re-render unneccessarily
   const currentDate = useMemo(() => new Date(), []);
 
-
   const [attendances, setAttendances] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [selectedMonth, setSelectedMonth] = useState(months[currentDate.getMonth()]);
-  const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth());
-
+  const [selectedMonth, setSelectedMonth] = useState(currentDate);
 
   useEffect(() => {
     const fetchAttendances = async () => {
       try {
         const res = await fetch(`/api/attendances/kid/${kidId}`);
         const data = await res.json();
-        const filteredData = filterByMonth(data, currentDate.getFullYear(), currentDate.getMonth());
+        const filteredData = filterByMonth(data, selectedMonth.getFullYear(), selectedMonth.getMonth());
         setAttendances(filteredData);
       } catch (error) {
         console.log("Error fetching data " + error);
@@ -29,7 +26,7 @@ const AttendanceList = ({ kidId }) => {
       }
     };
     fetchAttendances();
-  }, [kidId, currentDate]); // Refetch when the kidId prop changes
+  }, [kidId, selectedMonth]); // Refetch when the kidId prop changes
 
   const filterByMonth = (data, year, month) => {
     return data.filter((item) => {
@@ -39,14 +36,18 @@ const AttendanceList = ({ kidId }) => {
   };
 
   const showNextMonth = () => {
-    setSelectedMonth((currentlySelectedMonth) => {
-      return (currentlySelectedMonth + 1) % 12; // Loop back to 0 after 11 (December)
+    setSelectedMonth((current) => {
+      const nextMonth = new Date(current); // Clone the date
+      nextMonth.setMonth(current.getMonth() + 1);
+      return nextMonth;
     });
   };
 
   const showPreviousMonth = () => {
-    setSelectedMonth((currentlySelectedMonth) => {
-      return (currentlySelectedMonth - 1 + 12) % 12; // Loop back to 11 (December) after 0 (January)
+    setSelectedMonth((current) => {
+      const previousMonth = new Date(current); // Clone the date
+      previousMonth.setMonth(current.getMonth() - 1);
+      return previousMonth;
     });
   };
 
@@ -55,7 +56,7 @@ const AttendanceList = ({ kidId }) => {
     <div className="overflow-x-auto">
       <span>
         <FaArrowLeft onClick= {showPreviousMonth}/>
-      <h1>{months[selectedMonth]}</h1>
+      <h1>{`${months[selectedMonth.getMonth()]} ${selectedMonth.getFullYear()}`}</h1>
       <FaArrowRight onClick={showNextMonth}/>
       </span>
       <table className="table-auto">
@@ -86,7 +87,7 @@ const AttendanceList = ({ kidId }) => {
 };
 
 AttendanceList.propTypes = {
-  kidId: PropTypes.string.isRequired,
+  kidId: PropTypes.number.isRequired,
 };
 
 export default AttendanceList;
