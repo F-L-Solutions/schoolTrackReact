@@ -4,10 +4,24 @@ import PropTypes from "prop-types";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const AttendanceList = ({ kidId }) => {
-  const months = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
+  const months = [
+    "Leden",
+    "Únor",
+    "Březen",
+    "Duben",
+    "Květen",
+    "Červen",
+    "Červenec",
+    "Srpen",
+    "Září",
+    "Říjen",
+    "Listopad",
+    "Prosinec",
+  ];
   // Memoize the currentDate object - otherwise it would re-render unneccessarily
   const currentDate = useMemo(() => new Date(), []);
 
+  const [allAttendances, setAllAttendances] = useState([]);
   const [attendances, setAttendances] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(currentDate);
@@ -17,22 +31,34 @@ const AttendanceList = ({ kidId }) => {
       try {
         const res = await fetch(`/api/attendances/kid/${kidId}`);
         const data = await res.json();
-        const filteredData = filterByMonth(data, selectedMonth.getFullYear(), selectedMonth.getMonth());
-        setAttendances(filteredData);
+        // const filteredData = filterByMonth(data, selectedMonth.getFullYear(), selectedMonth.getMonth());
+        // setAttendances(filteredData);
+        setAllAttendances(data);
+        setSelectedMonth(new Date());
+        filterByMonth(data, new Date());
       } catch (error) {
-        console.log("Error fetching data " + error);
+        console.error("Error fetching data " + error);
       } finally {
         setLoading(false);
       }
     };
     fetchAttendances();
-  }, [kidId, selectedMonth]); // Refetch when the kidId prop changes
+  }, [kidId]); // Refetch when the kidId prop changes
 
-  const filterByMonth = (data, year, month) => {
-    return data.filter((item) => {
+  useEffect(() => {
+    filterByMonth(allAttendances, selectedMonth);
+  }, [allAttendances, selectedMonth]);
+
+  const filterByMonth = (data, month) => {
+    if (data.length === 0) return;
+    const filteredData = data.filter((item) => {
       const itemDate = new Date(item.date);
-      return itemDate.getFullYear() === year && itemDate.getMonth() === month;
+      return (
+        itemDate.getFullYear() === month.getFullYear() &&
+        itemDate.getMonth() === month.getMonth()
+      );
     });
+    setAttendances(filteredData);
   };
 
   const showNextMonth = () => {
@@ -57,9 +83,11 @@ const AttendanceList = ({ kidId }) => {
   return (
     <div className="overflow-x-auto">
       <span>
-        <FaArrowLeft onClick= {showPreviousMonth}/>
-      <h1>{`${months[selectedMonth.getMonth()]} ${selectedMonth.getFullYear()}`}</h1>
-      <FaArrowRight onClick={showNextMonth}/>
+        <FaArrowLeft onClick={showPreviousMonth} />
+        <h1>{`${
+          months[selectedMonth.getMonth()]
+        } ${selectedMonth.getFullYear()}`}</h1>
+        <FaArrowRight onClick={showNextMonth} />
       </span>
       <table className="table-auto">
         <thead>
