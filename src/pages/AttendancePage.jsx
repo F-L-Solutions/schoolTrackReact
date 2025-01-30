@@ -4,10 +4,10 @@ import AttendanceList from "../components/AttendanceList";
 import PropTypes from "prop-types";
 
 const AttendancePage = () => {
-  const {kidId} = useOutletContext();
+  const { kidId } = useOutletContext();
   return (
     <div className="flex justify-center align-middle">
-      <AttendanceList kidId={kidId} />
+      {kidId && <AttendanceList kidId={kidId} />}
     </div>
   );
 };

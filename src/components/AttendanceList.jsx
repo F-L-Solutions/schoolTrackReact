@@ -38,6 +38,7 @@ const AttendanceList = ({ kidId }) => {
   const showNextMonth = () => {
     setSelectedMonth((current) => {
       const nextMonth = new Date(current); // Clone the date
+      nextMonth.setDate(1); // Prevents skipping months
       nextMonth.setMonth(current.getMonth() + 1);
       return nextMonth;
     });
@@ -46,6 +47,7 @@ const AttendanceList = ({ kidId }) => {
   const showPreviousMonth = () => {
     setSelectedMonth((current) => {
       const previousMonth = new Date(current); // Clone the date
+      previousMonth.setDate(1); // Prevents skipping months
       previousMonth.setMonth(current.getMonth() - 1);
       return previousMonth;
     });
