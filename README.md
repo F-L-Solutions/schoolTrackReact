@@ -19,14 +19,14 @@ The backend is already integrated, and we're actively developing more features o
 
 Below are mockups and screenshots of the current interface and future planned features.
 
+### 👶 Login
+![Child Selection](public/login.png)
+
 ### 📅 Monthly Attendance Calendar View  
-![Monthly Attendance View](screenshots/attendance-month-view.png)
+![Monthly Attendance View](public/attendance-calendar-view.png)
 
 ### 📅 Monthly Attendance List View  
-![Monthly Attendance View](screenshots/attendance-month-view.png)
-
-### 👶 Login
-![Child Selection](screenshots/login.png)
+![Monthly Attendance View](public/attendance-list-view.png)
 
 ---
 
